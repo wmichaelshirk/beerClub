@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" ng-app="beerClub">
+    <head>
+        <meta charset="utf-8">
+        <title>Beer Club</title>
+        <meta name="description" content="Grab your beer, son. It's time to vote!">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="google-signin-scope" content="profile email">
+        <meta name="google-signin-client_id" content="604204486967-jiqfjjk5ar31ae1mehjq9eaa1nptlllk.apps.googleusercontent.com">
+        <script src="https://apis.google.com/js/platform.js" ></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular-route.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="dist/styles.css">
+    </head>
+    <body class="container" ng-controller="mainController as mc">
+      <header ng-class="{hidden: mc.googleService.isAuthorized}">
+        <img src="IMG_20150529_085843.jpg" class="img-responsive">
+        <div class="g-signin2" data-onsuccess="signIn"></div>
+      </header>
+      <section ng-view ng-class="{hidden: !mc.googleService.isAuthorized}"></section>
+      <section>
+        <ul>
+          <li ng-repeat="user in mc.users">{{user.name}}</li>
+        </ul>
+      </section>
+
+
+      <footer ng-class="{hidden: !mc.googleService.isAuthorized}">
+        <a href="#" class="btn btn-default btn-block" ng-click="mc.googleService.signOut();">Sign out</a>
+      </footer>
+    </body>
+    <script src="dist/app.js"></script>
+</html>

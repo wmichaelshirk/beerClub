@@ -1,0 +1,27 @@
+<h1>What’s on tap?</h1>
+
+<form>
+  <div class="form-group">
+    <label for="beerName">Beer Name:</label>
+    <input type="text" class="form-control" id="beerName">
+  </div>
+  <div class="form-group">
+    <label for="beerType">Beer Type:</label>
+    <input type="text" class="form-control" id="beerType" list="beerTypes">
+  </div>
+  <div class="form-group">
+    <label for="beerDescription">Description:</label>
+    <input type="text" class="form-control" id="beerDescription">
+  </div>
+  <div class="form-group">
+    <button class="btn btn-default btn-lg btn-block">
+      <span class="glyphicon glyphicon-camera"></span>
+      Add a photo
+    </button>
+  </div>
+  <button type="submit" class="btn btn-default btn-lg btn-block">Bottoms up!</button>
+</form>
+
+<datalist id="beerTypes">
+  <option ng-repeat=""> <!-- value="options" -->
+</datalist>
