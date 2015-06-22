@@ -1,11 +1,36 @@
 <h2>Now Voting</h2>
 <ol class="list-unstyled">
   <li ng-repeat="beer in mc.DB.beers">
-    {{beer.name}}
+    <section class="panel panel-default">
+      <header class="panel-heading">
+        <h3 class="panel-title">{{ beer.name }}</h3>
+        <p><small>{{ beer.brewery }}</small></p>
+        <div class="pull-right">{{beer.type}}</div>
+        <p>{{beer.description}}</p>
+      </header>
+      <div class="panel-body" >
+        <rating class="rating" ng-model="beer.myVote"></rating>
+          <button type="submit" class="btn btn-large btn-primary btn-block">
+            Submit
+          </button>
+      </div>
+    </section>
   </li>
 </ol>
 
 <h2>Already Rated</h2>
 <ol class="list-unstyled">
-  <li><section></section></li>
+  <li ng-repeat="beer in mc.DB.beers">
+    <section class="panel panel-default">
+      <header class="panel-heading">
+        <h3 class="panel-title">{{ beer.name }}</h3>
+
+        <small>{{ beer.brewery }}</small>
+      </header>
+      <div class="panel-body">
+        <div class="pull-right">{{beer.type}}</div>
+        <p>{{beer.description}}</p>
+      </div>
+    </section>
+  </li>
 </ol>

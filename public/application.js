@@ -1,4 +1,5 @@
-var app = angular.module('beerClub', ['ngRoute', 'ngSocket']);
+var app = angular.module('beerClub', ['ngRoute', 'ngSocket',
+'ui.bootstrap.rating', "template/rating/rating.html"]);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider

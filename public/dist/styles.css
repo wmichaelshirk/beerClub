@@ -6,3 +6,12 @@ body {
   max-width: 360px;
   background-color: white;
 }
+
+.rating {
+  font-size: 3em;
+  outline: 0;
+}
+.rating i {
+  padding:0 8px;
+  color: orange;
+}
