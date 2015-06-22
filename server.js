@@ -3,9 +3,11 @@ var express  = require('express');
 var app      = express();
 var server   = require('http').Server(app);
 var io       = require('socket.io')(server);
+var _        = require('underscore');
 var mongoose = require('mongoose');
                require('./app/models/User');
                require('./app/models/ConnectedUser');
+               require('./app/models/Beer');
 
 // may need body-parser?
 // may need serve-favicon?
@@ -13,8 +15,9 @@ var mongoose = require('mongoose');
 
 // Mongoose models.
 mongoose.connect('mongodb://localhost/beerClub');
-var User = mongoose.model('User');
+var User          = mongoose.model('User');
 var ConnectedUser = mongoose.model('ConnectedUser');
+var Beer          = mongoose.model('Beer');
 
 
 
@@ -30,6 +33,7 @@ io.on('connection', function(socket) {
       var userData = success;
       userData.socketId = socket.id;
       logUser(userData);
+      pushUpdates('Beer');
     });
   });
   socket.on('logout', function(data) {
@@ -38,14 +42,17 @@ io.on('connection', function(socket) {
   socket.on('disconnect', function(data) {
     disconnect(socket.id);
   });
-})
-
-
-
-
-
-
-
+  socket.on('create', function(data) {
+    _.each(_.keys(data), function(obj) {
+      var thisObj = new (mongoose.model(obj))(data[obj]);
+      thisObj.save(function (err) {
+        if (err) { console.error(err); }
+        console.log('New ' + obj + ' added.');
+        pushUpdates('Beer');
+      });
+    });
+  });
+});
 
 
 
@@ -115,4 +122,15 @@ var disconnect = function(socketId) {
       };
     }
   );
-}
+};
+
+
+var pushUpdates = function(model) {
+
+  Beer.find({}).sort('-date').exec(function(err, results) {
+    if (err) { console.error(err); }
+    else {
+      io.emit('update', {'beers': results });
+    }
+  });
+};

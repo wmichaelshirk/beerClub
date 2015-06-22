@@ -7,8 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "build:js": "cat public/modules/ngSocket.js public/application.js public/modules/db-service.js public/modules/google-service.js > public/dist/app.js",
+    "build": "npm run build:js"
   },
   "repository": {
     "type": "git",
@@ -24,12 +24,9 @@
   },
   "homepage": "https://github.com/wmichaelshirk/beerClub#readme",
   "dependencies": {
-    "express": "^4.12.4",
+    "express": "^4.13.0",
     "mongoose": "^4.0.5",
-    "socket.io": "^1.3.5"
-  },
-  "scripts": {
-    "build:js": "cat public/modules/ngSocket.js public/application.js public/modules/google-service.js > public/dist/app.js",
-    "build": "npm run build:js"
+    "socket.io": "^1.3.5",
+    "underscore": "^1.8.3"
   }
 }

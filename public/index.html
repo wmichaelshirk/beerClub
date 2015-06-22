@@ -8,6 +8,7 @@
         <meta name="google-signin-scope" content="profile email">
         <meta name="google-signin-client_id" content="604204486967-jiqfjjk5ar31ae1mehjq9eaa1nptlllk.apps.googleusercontent.com">
         <script src="https://apis.google.com/js/platform.js" ></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular-route.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
@@ -20,11 +21,11 @@
         <div class="g-signin2" data-onsuccess="signIn"></div>
       </header>
       <section ng-view ng-class="{hidden: !mc.googleService.isAuthorized}"></section>
-      <section>
+      <!-- <section>
         <ul>
           <li ng-repeat="user in mc.users">{{user.name}}</li>
         </ul>
-      </section>
+      </section> -->
 
 
       <footer ng-class="{hidden: !mc.googleService.isAuthorized}">

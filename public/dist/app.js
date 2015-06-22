@@ -137,8 +137,12 @@ app.config(['$routeProvider', function($routeProvider) {
   });
 }]);
 
-app.controller('mainController', ['googleService', '$scope', '$socket', function(googleService, $scope, $socket) {
+app.controller('mainController', ['googleService', '$scope', 'DB',
+function(googleService, $scope, DB) {
   this.googleService = googleService;
+  this.DB = DB;
+
+  console.log(this);
   window.signIn = function(x) {
     googleService.signIn(x);
     $scope.$apply();
@@ -146,12 +150,31 @@ app.controller('mainController', ['googleService', '$scope', '$socket', function
 
   this.users = [];
 
-  $socket.on('users', function(data) {
-    this.users = data;
+  this.submitBeer = function() {
+    console.log('submit');
+    DB.addBeer({
+      name: this.newBeerName,
+      brewery: this.newBeerBrewery,
+      type: this.newBeerType,
+      description: this.newBeerDescription
+    });
+  };
+
+
+
+}]);
+angular.module('beerClub').
+service('DB', ['$socket', function($socket) {
+  var self = this;
+
+  $socket.on('update', function (data) {
+    console.log(data);
+    _.extend(self, data);
   });
 
-
-
+  this.addBeer = function(newBeer) {
+    $socket.emit('create', {'Beer' : newBeer});
+  }
 }]);
 angular.module('beerClub').
 service('googleService', ['$socket', function($socket) {

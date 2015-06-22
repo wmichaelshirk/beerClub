@@ -1,6 +1,8 @@
 <h2>Now Voting</h2>
 <ol class="list-unstyled">
-  <li><section></section></li>
+  <li ng-repeat="beer in mc.DB.beers">
+    {{beer.name}}
+  </li>
 </ol>
 
 <h2>Already Rated</h2>
