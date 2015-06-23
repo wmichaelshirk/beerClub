@@ -37,6 +37,28 @@ function(googleService, $scope, DB) {
 
   this.users = [];
 
+  this.beerTypes = [
+    'Wheat Beer',
+    'Lambic/Sour',
+    'Belgian Ale',
+    'Pale Ale',
+    'Bitter',
+    'Scottish Ale',
+    'Brown Ale',
+    'Porter',
+    'Stout',
+    'Pilsner',
+    'American Lager',
+    'European Lager',
+    'Bock',
+    'Alt',
+    'French Ale',
+    'German Amber',
+    'American Special',
+    'Smoked Beer',
+    'Barley Wine',
+    'Strong Ale'
+  ]
   this.submitBeer = function() {
     console.log('submit');
     DB.addBeer({

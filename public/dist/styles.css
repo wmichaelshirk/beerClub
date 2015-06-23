@@ -15,3 +15,28 @@ body {
   padding:0 8px;
   color: orange;
 }
+
+.panel-title {
+  margin-bottom: 4px;
+}
+
+.ratings-container {
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-align: stretch;
+  flex-align: stretch;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  color: orange;
+  font-size: 3em;
+}
+
+.photo {
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  border-radius: 50%;
+  display: block;
+  height: 32px;
+  width: 32px;
+  margin: 0 auto;
+}

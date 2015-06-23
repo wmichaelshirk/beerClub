@@ -166,6 +166,28 @@ function(googleService, $scope, DB) {
 
   this.users = [];
 
+  this.beerTypes = [
+    'Wheat Beer',
+    'Lambic/Sour',
+    'Belgian Ale',
+    'Pale Ale',
+    'Bitter',
+    'Scottish Ale',
+    'Brown Ale',
+    'Porter',
+    'Stout',
+    'Pilsner',
+    'American Lager',
+    'European Lager',
+    'Bock',
+    'Alt',
+    'French Ale',
+    'German Amber',
+    'American Special',
+    'Smoked Beer',
+    'Barley Wine',
+    'Strong Ale'
+  ]
   this.submitBeer = function() {
     console.log('submit');
     DB.addBeer({
@@ -182,7 +204,6 @@ function(googleService, $scope, DB) {
 angular.module('beerClub').
 service('DB', ['$socket', function($socket) {
   var self = this;
-  self.myVotes = {};
 
   $socket.on('update', function (data) {
     console.log(data);
@@ -192,7 +213,6 @@ service('DB', ['$socket', function($socket) {
     var key = _.keys(data)[0];
     self[key] = self[key] || {};
     _.extend(self[key], data[key]);
-    console.log(self);
   });
 
   this.addBeer = function(newBeer) {
