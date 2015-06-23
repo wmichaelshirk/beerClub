@@ -136,7 +136,8 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl : 'modules/main-menu/main-menu.html'
   })
   .when('/myvotes', {
-    templateUrl : 'modules/my-votes/my-votes.html'
+    templateUrl : 'modules/my-votes/my-votes.html',
+    controller  : 'myVotesCtrl as mv'
   })
   .when('/submit', {
     templateUrl : 'modules/submit-beer/submit-beer.html'
@@ -181,14 +182,26 @@ function(googleService, $scope, DB) {
 angular.module('beerClub').
 service('DB', ['$socket', function($socket) {
   var self = this;
+  self.myVotes = {};
 
   $socket.on('update', function (data) {
     console.log(data);
     _.extend(self, data);
   });
+  $socket.on('add', function(data) {
+    var key = _.keys(data)[0];
+    self[key] = self[key] || {};
+    _.extend(self[key], data[key]);
+    console.log(self);
+  });
 
   this.addBeer = function(newBeer) {
     $socket.emit('create', {'Beer' : newBeer});
+  }
+  this.submitVote = function(beer) {
+    var newBeer = {'beer': beer._id, 'rating': beer.myVote}
+    console.log(newBeer);
+    $socket.emit('Vote', newBeer);
   }
 }]);
 angular.module('beerClub').
@@ -215,5 +228,12 @@ service('googleService', ['$socket', function($socket) {
     self.isAuthorized = false;
     self.user = {};
   };
+
+}]);
+angular.module('beerClub')
+.controller('myVotesCtrl', ['$scope', 'DB',
+function($scope, DB) {
+
+  var self=this;
 
 }]);

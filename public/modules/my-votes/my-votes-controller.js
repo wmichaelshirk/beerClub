@@ -3,9 +3,5 @@ angular.module('beerClub')
 function($scope, DB) {
 
   var self=this;
-  this.vote = function();
-
-
-
 
 }]);

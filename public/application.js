@@ -7,7 +7,8 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl : 'modules/main-menu/main-menu.html'
   })
   .when('/myvotes', {
-    templateUrl : 'modules/my-votes/my-votes.html'
+    templateUrl : 'modules/my-votes/my-votes.html',
+    controller  : 'myVotesCtrl as mv'
   })
   .when('/submit', {
     templateUrl : 'modules/submit-beer/submit-beer.html'

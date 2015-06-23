@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
                require('./app/models/User');
                require('./app/models/ConnectedUser');
                require('./app/models/Beer');
+               require('./app/models/Rating');
 
 // may need body-parser?
 // may need serve-favicon?
@@ -18,6 +19,7 @@ mongoose.connect('mongodb://localhost/beerClub');
 var User          = mongoose.model('User');
 var ConnectedUser = mongoose.model('ConnectedUser');
 var Beer          = mongoose.model('Beer');
+var Rating        = mongoose.model('Rating');
 
 
 
@@ -31,9 +33,11 @@ io.on('connection', function(socket) {
   socket.on('login', function(data) {
     checkToken(data, function(success) {
       var userData = success;
+      id = userData.sub;
       userData.socketId = socket.id;
       logUser(userData);
-      pushUpdates('Beer');
+      pushUpdates('Beer', socket);
+      pushVotes(socket);
     });
   });
   socket.on('logout', function(data) {
@@ -51,6 +55,20 @@ io.on('connection', function(socket) {
         pushUpdates('Beer');
       });
     });
+  });
+  socket.on('Vote', function(data) {
+    data.user = id;
+    Rating.findOneAndUpdate(
+      { 'user' : data.user, 'beer': data.beer }, // Query
+      { 'rating': data.rating },                 // Model
+      { upsert: true },         // Update or Insert, either one
+      function (err) {
+        if (err) { console.error(err); }
+        var returnVote = {};
+        returnVote[data.beer] = data.rating;
+        socket.emit('add', {'myVotes': returnVote});
+      }
+    );
   });
 });
 
@@ -125,12 +143,31 @@ var disconnect = function(socketId) {
 };
 
 
-var pushUpdates = function(model) {
-
+var pushUpdates = function(model, target) {
+  target = target || io;
   Beer.find({}).sort('-date').exec(function(err, results) {
     if (err) { console.error(err); }
     else {
-      io.emit('update', {'beers': results });
+      target.emit('update', {'beers': results });
     }
   });
 };
+var pushVotes = function(sock) {
+  User.findOne({socket: sock.id}).select('_id').exec(function(err, user) {
+    if (err) { console.error(err); }
+    var ratingReturn = {};
+    if (user) {
+      Rating.find({user: user._id}).exec(function(err, ratings) {
+        if (err) { console.error(err); }
+        ratingReturn = _.map(ratings, function (r) {
+          return [r.beer, r.rating];
+        });
+        sock.emit('add', {'myVotes': _.object(ratingReturn)});
+      });
+    }
+
+  });
+};
+//      var returnVote = {};
+//      returnVote[thisVote.beer] = thisVote.rating;
+//      socket.emit('add', {'myVotes': returnVote});
