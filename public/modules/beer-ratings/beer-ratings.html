@@ -1,46 +1,48 @@
 <h2>Now Voting</h2>
 <ol class="list-unstyled">
-  <li ng-repeat="beer in mc.DB.beers">
+  <li ng-repeat="beer in mc.DB.beers | filter:{active:true} track by beer._id">
     <section class="panel panel-default">
       <header class="panel-heading">
-        <rating class="pull-right" ng-model="mc.DB.myVotes[beer._id]" readonly="true"></rating>
+        <span class="pull-right">Rating: {{beer.avg}}/5</span>
         <h3 class="panel-title">{{ beer.name }}</h3>
         <div class="pull-right">{{beer.type}}</div>
         <p><small>{{ beer.brewery }}</small></p>
       </header>
       <div class="panel-body">
+        <button type="button" class="btn btn-large btn-primary btn-block"
+                ng-click="mc.DB.submitVote1(beer)">
+          Submit
+        </button>
+        <rating class="rating" ng-model="beer.myVote"></rating>
         <ol class="list-unstyled list-inline ratings-container">
-          <li><span class="glyphicon glyphicon-star"></span>
+          <li ng-repeat="starCol in beer.votes track by $index">
             <ul class="list-unstyled">
-              <li >
-                <div class="photo" style="background-color: green;"><div>
+              <li ng-repeat="voter in starCol" class="slideDown">
+                <div class="photo" style="background-image: url({{mc.DB.users[voter].photo}})"><div>
               </li>
             </ul>
           </li>
-          <li><span class="glyphicon glyphicon-star"></span></li>
-          <li><span class="glyphicon glyphicon-star"></span>
-            <ul class="list-unstyled">
-              <li >
-                <div class="photo" style="background-color: green;"><div>
-              </li>
-              <li >
-                <div class="photo" style="background-color: green;"><div>
-              </li>
-              <li >
-                <div class="photo" style="background-color: green;"><div>
-              </li>
-            </ul>
-            
-          </li>
-          <li><span class="glyphicon glyphicon-star"></span></li>
-          <li><span class="glyphicon glyphicon-star"></span></li>
         </ol>
       </div>
+      <footer class="panel-footer">
+        <p>{{beer.description}}</p>
+      </footer>
     </section>
   </li>
 </ol>
 
 <h2>Already Rated</h2>
-<ol class="list-unstyled">
-  <li><section></section></li>
+<li ng-repeat="beer in mc.DB.beers | filter:!{active:true} track by beer._id">
+  <section class="panel panel-default">
+    <header class="panel-heading">
+      <span class="pull-right">Rating: {{beer.avg}}/5</span>
+      <h3 class="panel-title">{{ beer.name }}</h3>
+      <div class="pull-right">{{beer.type}}</div>
+      <p><small>{{ beer.brewery }}</small></p>
+    </header>
+    <footer class="panel-footer">
+      <p>{{beer.description}}</p>
+    </footer>
+  </section>
+</li>
 </ol>

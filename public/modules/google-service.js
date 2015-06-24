@@ -7,6 +7,7 @@ service('googleService', ['$socket', function($socket) {
 
   this.signIn = function(googleUser) {
     var profile  = googleUser.getBasicProfile();
+    self.user.id      = profile.getId();
     self.user.name    = profile.getName();
     self.user.image   = profile.getImageUrl();
     self.user.token   = googleUser.getAuthResponse().id_token;

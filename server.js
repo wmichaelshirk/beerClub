@@ -20,6 +20,7 @@ var User          = mongoose.model('User');
 var ConnectedUser = mongoose.model('ConnectedUser');
 var Beer          = mongoose.model('Beer');
 var Rating        = mongoose.model('Rating');
+var ObjectId      = mongoose.Types.ObjectId;
 
 
 
@@ -38,6 +39,7 @@ io.on('connection', function(socket) {
       logUser(userData);
       pushUpdates('Beer', socket);
       pushVotes(socket);
+      pushUsers();
     });
   });
   socket.on('logout', function(data) {
@@ -57,18 +59,16 @@ io.on('connection', function(socket) {
     });
   });
   socket.on('Vote', function(data) {
-    data.user = id;
-    Rating.findOneAndUpdate(
-      { 'user' : data.user, 'beer': data.beer }, // Query
-      { 'rating': data.rating },                 // Model
-      { upsert: true },         // Update or Insert, either one
-      function (err) {
+    if (id) {
+      var obj = {};
+      obj['ratings.'+id] = data.rating;
+      Beer.update({_id: new ObjectId(data.beer)},
+                  {$set: obj},
+                  function (err, found) {
         if (err) { console.error(err); }
-        var returnVote = {};
-        returnVote[data.beer] = data.rating;
-        socket.emit('add', {'myVotes': returnVote});
-      }
-    );
+        pushUpdates('Beer');
+      });
+    }
   });
 });
 
@@ -145,10 +145,42 @@ var disconnect = function(socketId) {
 
 var pushUpdates = function(model, target) {
   target = target || io;
-  Beer.find({}).sort('-date').exec(function(err, results) {
+  Beer.find({}).sort('-date').lean().exec(function(err, results) {
     if (err) { console.error(err); }
     else {
+      /* Start - calculate scores */
+      _.map(results, function (beer) {
+        var votes = votes = [[],[],[],[],[]];
+        _.mapObject(beer.ratings, function(val, key) {
+          votes[val-1].push(key);
+        });
+        beer.votes = votes;
+        // find the average to the nearest quarter.
+        var sum = votes[0].length +
+                  votes[1].length * 2 +
+                  votes[2].length * 3 +
+                  votes[3].length * 4 +
+                  votes[4].length * 5;
+        var avg = Math.round((sum / _.flatten(votes).length) * 4) /4;
+        beer.avg = avg;
+        return beer;
+      });
+      /* -- end - calculate. */
       target.emit('update', {'beers': results });
+    }
+  });
+};
+var pushUsers = function() {
+  User.find({}).exec(function(err, results) {
+    if (err) { console.error(err); }
+    else {
+      results =_.indexBy( _.map(results, function (e) {
+        return {id: e._id,
+          firstName: e.firstName,
+          lastName: e.lastName,
+          photo: e.photoUrl }
+      }), 'id');
+      io.emit('update', {'users': results });
     }
   });
 };

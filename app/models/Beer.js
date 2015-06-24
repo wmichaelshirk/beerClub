@@ -5,7 +5,9 @@ var BeerSchema = new mongoose.Schema({
   brewery: String,
   type: String,
   description: String,
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now },
+  ratings: {},
+  active: {type: Boolean, default: true}
 });
 
 mongoose.model('Beer', BeerSchema);
