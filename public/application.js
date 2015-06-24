@@ -69,6 +69,12 @@ function(googleService, $scope, DB) {
     });
   };
 
+  this.activeLength = function() {
+    return (_.filter(DB.beers, function (e) {
+      return e.active == true;
+    })).length
+  }
+
 
 
 }]);

@@ -9,11 +9,11 @@
         <p><small>{{ beer.brewery }}</small></p>
       </header>
       <div class="panel-body">
-        <button type="button" class="btn btn-large btn-primary btn-block"
+        <!-- <button type="button" class="btn btn-large btn-primary btn-block"
                 ng-click="mc.DB.submitVote1(beer)">
           Submit
-        </button>
-        <rating class="rating" ng-model="beer.myVote"></rating>
+        </button> -->
+        <rating class="rating" ng-model="beer.myVote" ng-click="mc.DB.submitVote1(beer)"></rating>
         <ol class="list-unstyled list-inline ratings-container">
           <li ng-repeat="starCol in beer.votes track by $index">
             <ul class="list-unstyled">
