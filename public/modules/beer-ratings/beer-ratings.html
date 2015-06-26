@@ -1,18 +1,15 @@
-<h2>Now Voting</h2>
+<h2>Now tasting...</h2>
 <ol class="list-unstyled">
   <li ng-repeat="beer in mc.DB.beers | filter:{active:true} track by beer._id">
     <section class="panel panel-default">
       <header class="panel-heading">
-        <span class="pull-right">Rating: {{beer.avg}}/5</span>
+        <span class="pull-right">Rating: <b>{{beer.avg}}</b>/5</span>
         <h3 class="panel-title">{{ beer.name }}</h3>
-        <div class="pull-right">{{beer.type}}</div>
-        <p><small>{{ beer.brewery }}</small></p>
+        <div class="pull-right beer-type">{{beer.type}}</div>
+        <p>{{ beer.brewery }}</p>
       </header>
       <div class="panel-body">
-        <!-- <button type="button" class="btn btn-large btn-primary btn-block"
-                ng-click="mc.DB.submitVote1(beer)">
-          Submit
-        </button> -->
+
         <rating class="rating" ng-model="beer.myVote" ng-click="mc.DB.submitVote1(beer)"></rating>
         <ol class="list-unstyled list-inline ratings-container">
           <li ng-repeat="starCol in beer.votes track by $index">
@@ -31,13 +28,14 @@
   </li>
 </ol>
 
+<!--
 <h2>Already Rated</h2>
 <li ng-repeat="beer in mc.DB.beers | filter:!{active:true} track by beer._id">
   <section class="panel panel-default">
     <header class="panel-heading">
-      <span class="pull-right">Rating: {{beer.avg}}/5</span>
+      <span class="pull-right">Rating: <b>{{beer.avg}}</b>/5</span>
       <h3 class="panel-title">{{ beer.name }}</h3>
-      <div class="pull-right">{{beer.type}}</div>
+      <div class="pull-right beer-type">{{beer.type}}</div>
       <p><small>{{ beer.brewery }}</small></p>
     </header>
     <footer class="panel-footer">
@@ -45,4 +43,4 @@
     </footer>
   </section>
 </li>
-</ol>
+</ol> -->

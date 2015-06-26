@@ -1,12 +1,26 @@
-body {
+html {
   background-color: grey;
 }
 
+header nav {
+  padding: 0 15px;
+}
+.navbar-default {
+  background-color: #c8d5b9;
+}
+header nav .btn {
+  background-color: #e2efd3;
+  border-color: #49563a;
+  color: #7c896d;
+}
 .container {
   max-width: 360px;
   background-color: white;
 }
 
+.navbar {
+  margin-bottom: 10px;
+}
 .rating {
   font-size: 3.1em;
   outline: 0;
@@ -39,11 +53,11 @@ body {
 
 .photo {
   box-shadow: 0 1px 2px rgba(0,0,0,.2);
-  background-size: 32px 32px;
+  background-size: 36px 36px;
   border-radius: 50%;
   display: block;
-  height: 32px;
-  width: 32px;
+  height: 36px;
+  width: 36px;
   margin: 0 auto;
 }
 
@@ -101,4 +115,33 @@ body {
 	100% {
 		-webkit-transform: translateY(0%);
 	}
+}
+
+.btn-block {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  margin-top: 10px;
+}
+
+.panel-title {
+  font-family: serif;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.beer-type {
+  font-style: italic;
+}
+.beer-rating {
+  font-weight: bold;
+}
+.navbar-text {
+  text-align: center;
+  font-size: 1.5em;
+  margin-top: 0px;
+margin-bottom: 10px;
+padding-top: 10px;
 }

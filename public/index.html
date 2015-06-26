@@ -16,20 +16,29 @@
         <link rel="stylesheet" href="dist/styles.css">
     </head>
     <body class="container" ng-controller="mainController as mc">
-      <header ng-class="{hidden: mc.googleService.isAuthorized}">
-        <img src="IMG_20150529_085843.jpg" class="img-responsive">
-        <div class="g-signin2" data-onsuccess="signIn"></div>
+      <header class="row">
+        <nav class="navbar navbar-default navbar-static-top">
+          <section ng-show="mc.googleService.isAuthorized">
+            <a class="btn btn-default navbar-btn pull-left" href="#/" >
+              <span class="glyphicon glyphicon-home"></span>
+            </a>
+            <a class="btn btn-default navbar-btn pull-right"
+               ng-click="mc.googleService.signOut();" >
+              <span class="glyphicon glyphicon-log-out"></span>
+            </a>
+            <p class="navbar-text"> Yo, {{mc.googleService.user.name}}!</p>
+
+          </section>
+          <section ng-hide="mc.googleService.isAuthorized" >
+            <div class="g-signin2" style="margin:0 auto;width:120px" data-onsuccess="signIn"></div>
+            <img src="IMG_20150529_085843.jpg" class="img-responsive">
+          <section>
+        </nav>
       </header>
-      <section ng-view ng-class="{hidden: !mc.googleService.isAuthorized}"></section>
-      <!-- <section>
-        <ul>
-          <li ng-repeat="user in mc.users">{{user.name}}</li>
-        </ul>
-      </section> -->
 
+      <section ng-view ng-show="mc.googleService.isAuthorized"></section>
 
-      <footer ng-class="{hidden: !mc.googleService.isAuthorized}">
-        <a href="#" class="btn btn-default btn-block" ng-click="mc.googleService.signOut();">Sign out</a>
+      <footer>
       </footer>
     </body>
     <script src="dist/app.js"></script>
