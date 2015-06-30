@@ -35,11 +35,12 @@ header nav .btn {
 }
 
 .ratings-container {
+  display: -webkit-flex;
   display: flex;
   -webkit-flex-direction: row;
-  flex-direction: row;
+          flex-direction: row;
   -webkit-flex-align: stretch;
-  flex-align: stretch;
+          flex-align: stretch;
   //-webkit-justify-content: space-around;
   //justify-content: space-around;
   color: orange;
