@@ -19,6 +19,10 @@ service('DB', ['$socket', 'googleService', function($socket, googleService) {
     console.log(_.filter(this.beers, function(e) { return e._id == data[0]}));
   });
 
+  $socket.on('connect_failed', function() {
+    console.log("Connection failed.")
+  });
+
   this.addBeer = function(newBeer) {
     $socket.emit('create', {'Beer' : newBeer});
   }

@@ -1,5 +1,6 @@
 <h1>What’s on tap?</h1>
 
+<alert ng-if="mc.alert" type="{{mc.alert.type}}" close="mc.closeAlert()">{{mc.alert.msg}}</alert>
 <form ng-submit="mc.submitBeer()">
   <div class="form-group">
     <label for="beerName">Beer Name:</label>
@@ -27,7 +28,7 @@
       Add a photo
     </button>
   </div>
-  <button type="submit" class="btn btn-default btn-lg btn-block">Bottoms up!</button>
+  <button type="submit" class="btn btn-primary btn-lg btn-block">&#127866; Bottoms up!</button>
 </form>
 
 <datalist id="beerTypes">

@@ -1,0 +1,11 @@
+<h2>Administration</h2>
+<ol class="list-unstyled">
+  <li ng-repeat="beer in mc.DB.beers track by beer._id">
+    <section class="panel panel-default">
+      <header class="panel-heading">
+        <h3 class="panel-title">{{ beer.name }}</h3>
+        <button class="btn btn-info"><span class="glyphicon glyphicon-edit"></span></button>
+        <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+      </header>
+  </li>
+</ol>

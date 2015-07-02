@@ -1,5 +1,5 @@
 var app = angular.module('beerClub', ['ngRoute', 'ngSocket',
-'ui.bootstrap.rating', "template/rating/rating.html"]);
+'ui.bootstrap']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -19,6 +19,9 @@ app.config(['$routeProvider', function($routeProvider) {
   .when('/login', {
     templateUrl : 'modules/login-screen/login-screen.html'
   })
+  .when('/admin', {
+    templateUrl : 'modules/admin/admin.html'
+  })
   .otherwise({
     redirectTo: '/'
   });
@@ -29,7 +32,8 @@ function(googleService, $scope, DB) {
   this.googleService = googleService;
   this.DB = DB;
 
-  console.log(this);
+  var self=this;
+
   window.signIn = function(x) {
     googleService.signIn(x);
     $scope.$apply();
@@ -62,12 +66,23 @@ function(googleService, $scope, DB) {
   this.submitBeer = function() {
     console.log('submit');
     DB.addBeer({
-      name: this.newBeerName,
-      brewery: this.newBeerBrewery,
-      type: this.newBeerType,
-      description: this.newBeerDescription
+      name: self.newBeerName,
+      brewery: self.newBeerBrewery,
+      type: self.newBeerType,
+      description: self.newBeerDescription
     });
+    self.alert={
+      type: 'success', msg: this.newBeerName+" successfully added!"
+    };
+    self.newBeerName="";
+    self.newBeerBrewery = "";
+    self.newBeerType = "";
+    self.newBeerDescription="";
   };
+
+  this.closeAlert = function() {
+    self.alert=null;
+  }
 
   this.activeLength = function() {
     return (_.filter(DB.beers, function (e) {

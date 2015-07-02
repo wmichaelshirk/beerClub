@@ -28,19 +28,22 @@
   </li>
 </ol>
 
-<!--
 <h2>Already Rated</h2>
-<li ng-repeat="beer in mc.DB.beers | filter:!{active:true} track by beer._id">
-  <section class="panel panel-default">
-    <header class="panel-heading">
-      <span class="pull-right">Rating: <b>{{beer.avg}}</b>/5</span>
-      <h3 class="panel-title">{{ beer.name }}</h3>
-      <div class="pull-right beer-type">{{beer.type}}</div>
-      <p><small>{{ beer.brewery }}</small></p>
-    </header>
-    <footer class="panel-footer">
-      <p>{{beer.description}}</p>
-    </footer>
-  </section>
-</li>
-</ol> -->
+<ol class="list-unstyled">
+  <li ng-repeat="beer in mc.DB.beers | filter:{active:false} track by beer._id">
+    <section class="panel panel-default">
+      <header class="panel-heading">
+        <div class="pull-right">
+          <rating class="rating-small" ng-model="beer.myVote"></rating>
+          <p>Rating: <b>{{beer.avg}}</b>/5</p>
+          <span class="beer-type">{{beer.type}}</span>
+          </div>
+        <h3 class="panel-title">{{ beer.name }}</h3>
+        <p>{{ beer.brewery }}</p>
+      </header>
+      <footer class="panel-footer">
+        <p>{{beer.description}}</p>
+      </footer>
+    </section>
+  </li>
+</ol>

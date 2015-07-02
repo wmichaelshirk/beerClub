@@ -25,6 +25,13 @@ header nav .btn {
   font-size: 3.1em;
   outline: 0;
 }
+.rating-small {
+  display: block;
+  text-align: right;
+}
+.rating-small i {
+  color: orange;
+}
 .rating i {
   padding:0 8px;
   color: orange;
