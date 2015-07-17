@@ -1,5 +1,6 @@
 angular.module('beerClub').
 service('DB', ['$socket', 'googleService', function($socket, googleService) {
+  "use strict";
   var self = this;
 
   $socket.on('update', function (data) {
@@ -33,7 +34,12 @@ service('DB', ['$socket', 'googleService', function($socket, googleService) {
   }
   this.submitVote1 = function(beer) {
     var newBeer = {'beer': beer._id, 'rating': beer.myVote}
-    console.log(newBeer);
     $socket.emit('Vote', newBeer);
+  }
+  this.delete = function(beer) {
+    $socket.emit('Delete', {'beer': beer._id});
+  }
+  this.close = function(beer) {
+    $socket.emit('Close', {'beer': beer._id})
   }
 }]);

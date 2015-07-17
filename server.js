@@ -70,6 +70,20 @@ io.on('connection', function(socket) {
       });
     }
   });
+  socket.on('Delete', function(data) {
+      Beer.find({_id: new ObjectId(data.beer)})
+          .remove(function() {
+            pushUpdates('Beer');
+          });
+  });
+  socket.on('Close', function(data) {
+    Beer.update({_id: new ObjectId(data.beer)},
+                {$set: {'active':false}},
+                function (err, found) {
+                  if (err) { console.error(err); }
+                  pushUpdates('Beer');
+                });
+  });
 });
 
 

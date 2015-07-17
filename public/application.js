@@ -90,6 +90,10 @@ function(googleService, $scope, DB) {
     })).length
   }
 
+  this.deleteBeer = function() {
+    console.log("Delete");
+  }
+
 
 
 }]);

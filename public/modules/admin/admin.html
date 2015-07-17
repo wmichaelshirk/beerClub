@@ -4,8 +4,18 @@
     <section class="panel panel-default">
       <header class="panel-heading">
         <h3 class="panel-title">{{ beer.name }}</h3>
-        <button class="btn btn-info"><span class="glyphicon glyphicon-edit"></span></button>
-        <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+        <!-- <button class="btn btn-info">
+          <span class="glyphicon glyphicon-edit">
+          </span>
+        </button> -->
+        <button class="btn btn-danger" ng-click="mc.DB.delete(beer)">
+          <span class="glyphicon glyphicon-trash"></span>
+        </button>
+        <button class="btn btn-primary"
+                ng-if="beer.active" ng-click="mc.DB.close(beer)">
+          Close the Voting!
+        </button>
+        <span ng-if="!beer.active">Voting closed.</span>
       </header>
   </li>
 </ol>
