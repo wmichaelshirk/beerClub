@@ -26,7 +26,7 @@ var ObjectId      = mongoose.Types.ObjectId;
 
 
 app.use(express.static('public'));
-server.listen(process.env.PORT || 8080);
+server.listen(process.env.PORT || 3000);
 
 io.on('connection', function(socket) {
   var id;

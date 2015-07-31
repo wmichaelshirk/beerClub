@@ -11,7 +11,7 @@
       <div class="panel-body">
 
         <rating class="rating" ng-model="beer.myVote" ng-click="mc.DB.submitVote1(beer)"></rating>
-        <ol class="list-unstyled list-inline ratings-container">
+        <ol class="list-unstyled ratings-container">
           <li ng-repeat="starCol in beer.votes track by $index">
             <ul class="list-unstyled">
               <li ng-repeat="voter in starCol" class="slideDown">

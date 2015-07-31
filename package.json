@@ -1,6 +1,6 @@
 {
   "name": "beer-club",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Submit and rate beers",
   "main": "server.js",
   "directories": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build:js": "cat public/modules/underscore-min.js public/modules/ngSocket.js public/modules/ui-bootstrap-tpls-0.13.0.min.js public/application.js public/modules/db-service.js public/modules/google-service.js  public/modules/my-votes/my-votes-controller.js > public/dist/app.js",
-    "build": "npm run build:js"
+    "build": "npm run build:js",
   },
   "repository": {
     "type": "git",
